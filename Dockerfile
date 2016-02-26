@@ -1,4 +1,4 @@
-FROM php:7.0-apache
+FROM php:5.6-apache
 
 # Get repository and install wget and vim
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -48,11 +48,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
-    && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8 \
-    && pecl install apcu \
-    && git clone https://github.com/php-memcached-dev/php-memcached /usr/src/php/ext/memcached \
-    && cd /usr/src/php/ext/memcached && git checkout -b php7 origin/php7 \
-    && docker-php-ext-configure memcached \
+    && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8-2.0.10 \
+    && pecl install apcu-4.0.10 \
+    && pecl install memcached \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
     && docker-php-ext-install \
             iconv \
@@ -68,9 +66,9 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             soap \
             sockets \
             zip \
-            memcached \
             pcntl \
     && docker-php-ext-enable \
             oci8 \
             apcu \
+            memcached \
             opcache
