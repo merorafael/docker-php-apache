@@ -52,6 +52,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
     && pecl install apcu-4.0.10 \
     && pecl install redis \
     && pecl install memcached \
+    && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
     && docker-php-ext-install \
             iconv \
@@ -63,6 +64,7 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             mysqli \
             pdo_pgsql \
             pdo_mysql \
+            pdo_oci \
             pdo_dblib \
             soap \
             sockets \
