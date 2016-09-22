@@ -51,7 +51,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- \
 RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && echo 'instantclient,/opt/oracle/instantclient_12_1/' | pecl install oci8-2.0.10 \
     && pecl install apcu-4.0.10 \
-    && pecl install redis \
+    && pecl install redis-2.2.8 \
     && pecl install memcached \
     && docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_1,12.1 \
     && docker-php-ext-configure pdo_dblib --with-libdir=/lib/x86_64-linux-gnu \
@@ -71,12 +71,17 @@ RUN docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-di
             sockets \
             zip \
             pcntl \
+            ftp \
     && docker-php-ext-enable \
             oci8 \
             apcu \
             memcached \
             redis \
             opcache
+
+# Install PHPUnit 5.5
+RUN wget https://phar.phpunit.de/phpunit.phar -O /usr/local/bin/phpunit \
+    && chmod +x /usr/local/bin/phpunit
 
 # Clean repository
 RUN apt-get clean \

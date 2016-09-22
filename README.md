@@ -32,11 +32,13 @@ Extensions
 - simplexml
 - apcu
 - opcache
+- ftp
 
 Resources
 ---------
 
 - composer
+- phpunit
 - wget
 - vim
 - git
